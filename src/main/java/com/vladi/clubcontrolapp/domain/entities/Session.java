@@ -2,6 +2,7 @@ package com.vladi.clubcontrolapp.domain.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,14 +14,14 @@ public class Session {
   private UUID clientId;
   private UUID computerId;
   private UUID tariffId;
-  private LocalDate startTime;
-  private LocalDate endTime;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
   private BigDecimal totalCost;
   private boolean isActive;
 
   private List<SessionService> services = new ArrayList<>();
 
-  public Session(UUID clientId, UUID computerId, UUID tariffId, LocalDate startTime, LocalDate endTime, BigDecimal totalCost, boolean isActive){
+  public Session(UUID clientId, UUID computerId, UUID tariffId, LocalDateTime startTime, LocalDateTime endTime, BigDecimal totalCost, boolean isActive){
     this.id = UUID.randomUUID();
     this.clientId = clientId;
     this.computerId = computerId;
@@ -31,8 +32,8 @@ public class Session {
     this.isActive = isActive;
   }
 
-  public Session(UUID id, UUID client_id, UUID computerId, UUID tariffId, LocalDate startTime,
-      LocalDate endTime, BigDecimal totalCost, boolean isActive) {
+  public Session(UUID id, UUID client_id, UUID computerId, UUID tariffId, LocalDateTime startTime,
+      LocalDateTime endTime, BigDecimal totalCost, boolean isActive) {
     this.id = id;
     this.clientId = client_id;
     this.computerId = computerId;
@@ -77,19 +78,19 @@ public class Session {
     this.tariffId = tariffId;
   }
 
-  public LocalDate getStartTime() {
+  public LocalDateTime getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(LocalDate startTime) {
+  public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
 
-  public LocalDate getEndTime() {
+  public LocalDateTime getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(LocalDate endTime) {
+  public void setEndTime(LocalDateTime endTime) {
     this.endTime = endTime;
   }
 

@@ -12,6 +12,7 @@ public class Payment {
   private UUID sessionId;
   private BigDecimal amount;
   private LocalDate paymentDate;
+  private String paymentMethod;
 
   public Payment (UUID clientId, UUID sessionId, BigDecimal amount){
     this.id = UUID.randomUUID();
@@ -22,12 +23,13 @@ public class Payment {
   }
 
   public Payment(UUID id, UUID clientId, UUID sessionId, BigDecimal amount,
-      LocalDate paymentDate) {
+      LocalDate paymentDate, String paymentMethod) {
     this.id = id;
     this.clientId = clientId;
     this.sessionId = sessionId;
     this.amount = amount;
     this.paymentDate = paymentDate;
+    this.paymentMethod = paymentMethod;
   }
 
   public UUID getId() {
@@ -64,6 +66,14 @@ public class Payment {
 
   public void setPaymentDate(LocalDate paymentDate) {
     this.paymentDate = paymentDate;
+  }
+
+  public String getPaymentMethod() {
+    return paymentMethod;
+  }
+
+  public void setPaymentMethod(String paymentMethod) {
+    this.paymentMethod = paymentMethod;
   }
 
   @Override
