@@ -21,9 +21,13 @@ public class CachedServiceRepository
 
   @Override
   public Optional<Service> findByName(String name) {
-    Optional<Service> service = serviceDelegate.findByName(name);
-    service.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return service;
+    Optional<Service> fromDb = serviceDelegate.findByName(name);
+    return fromDb.map(service -> {
+      Optional<Service> cached = identityMap.get(service.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(service.getId(), service);
+      return service;
+    });
   }
 
   @Override

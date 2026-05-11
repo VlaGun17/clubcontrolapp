@@ -151,10 +151,6 @@ public class PersistanceSession {
     return adminRepository.findByLogin(login);
   }
 
-  public void createAdmin(Admin admin) {
-    unitOfWork.registerNew(admin);
-  }
-
   // --- TARIFFS ---
   public Optional<Tariff> getTariff(UUID id) {
     return tariffRepository.findById(id);
@@ -218,6 +214,10 @@ public class PersistanceSession {
     unitOfWork.registerNew(session);
   }
 
+  public void updateSession(Session session){
+    unitOfWork.registerDirty(session);
+  }
+
   public void removeSession(Session session){
     unitOfWork.registerDeleted(session);
   }
@@ -240,6 +240,10 @@ public class PersistanceSession {
 
   public void addPayments(Payment payment){
     unitOfWork.registerNew(payment);
+  }
+
+  public void updatePayment(Payment payment){
+    unitOfWork.registerDirty(payment);
   }
 
   public void removePayment(Payment payment){

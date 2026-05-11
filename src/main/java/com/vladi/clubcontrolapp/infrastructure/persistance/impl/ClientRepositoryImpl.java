@@ -199,7 +199,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         email = ?,
         balance = ?,
         discount_percent = ?,
-        visit_count
+        visit_count = ?
         WHERE id = ?
         """;
     try(Connection conn = connectionManager.getConnection();

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -102,8 +103,8 @@ public class ComputerRepositoryImpl implements ComputerRepository {
         PreparedStatement stmt = conn.prepareStatement(sql)){
       stmt.setObject(1, entity.getId());
       stmt.setInt(2, entity.getComputerNumber());
-      stmt.setString(3, entity.getComputerType());
-      stmt.setString(4, entity.getComputerStatus());
+      stmt.setObject(3, entity.getComputerType(), Types.OTHER);
+      stmt.setObject(4, entity.getComputerStatus(), Types.OTHER);
 
       int rowsAffected = stmt.executeUpdate();
       if (rowsAffected != 1) {
@@ -186,8 +187,9 @@ public class ComputerRepositoryImpl implements ComputerRepository {
     try(Connection conn = connectionManager.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.setInt(1, entity.getComputerNumber());
-      stmt.setString(2, entity.getComputerType());
-      stmt.setString(3, entity.getComputerStatus());
+      stmt.setObject(2, entity.getComputerType(), Types.OTHER);
+      stmt.setObject(3, entity.getComputerStatus(), Types.OTHER);
+      stmt.setObject(4, entity.getId());
 
       int rowsAffected = stmt.executeUpdate();
       if (rowsAffected == 0) {

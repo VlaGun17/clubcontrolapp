@@ -21,9 +21,13 @@ public class CachedTariffRepository
 
   @Override
   public Optional<Tariff> findCurrentTariff(LocalDate now) {
-    Optional<Tariff> tariff = tariffDelegate.findCurrentTariff(now);
-    tariff.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return tariff;
+    Optional<Tariff> fromDb = tariffDelegate.findCurrentTariff(now);
+    return fromDb.map(tariff -> {
+      Optional<Tariff> cached = identityMap.get(tariff.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(tariff.getId(), tariff);
+      return tariff;
+    });
   }
 
   @Override
@@ -35,8 +39,12 @@ public class CachedTariffRepository
 
   @Override
   public Optional<Tariff> findByName(String name) {
-    Optional<Tariff> tariff = tariffDelegate.findByName(name);
-    tariff.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return tariff;
+    Optional<Tariff> fromDb = tariffDelegate.findByName(name);
+    return fromDb.map(tariff -> {
+      Optional<Tariff> cached = identityMap.get(tariff.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(tariff.getId(), tariff);
+      return tariff;
+    });
   }
 }

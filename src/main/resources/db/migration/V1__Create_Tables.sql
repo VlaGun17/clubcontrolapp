@@ -1,3 +1,7 @@
+CREATE TYPE computer_type AS ENUM ('Common', 'VIP');
+CREATE TYPE computer_status AS ENUM ('Available', 'Busy', 'Maintenance');
+CREATE TYPE payment_method AS ENUM ('Cash', 'Card', 'Balance');
+
 CREATE TABLE admins (
     id            UUID PRIMARY KEY,
     username      VARCHAR(64) NOT NULL UNIQUE,
@@ -18,8 +22,8 @@ CREATE TABLE clients (
 CREATE TABLE computers (
     id           UUID PRIMARY KEY,
     comp_number  INTEGER NOT NULL UNIQUE CHECK (comp_number > 0),
-    type         ENUM('Common', 'VIP') NOT NULL,
-    status       ENUM('Available', 'Busy', 'Maintenance') NOT NULL DEFAULT 'Available'
+    type         computer_type NOT NULL,
+    status       computer_status NOT NULL DEFAULT 'Available'
 );
 
 CREATE TABLE tariffs (
@@ -64,7 +68,7 @@ CREATE TABLE payments (
     session_id   UUID NOT NULL,
     amount       DECIMAL(10, 2) NOT NULL CHECK (amount > 0),
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    method       ENUM('Cash', 'Card', 'Balance') NOT NULL,
+    method       payment_method NOT NULL,
     FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
     FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
 );

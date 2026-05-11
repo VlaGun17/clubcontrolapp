@@ -27,7 +27,7 @@ public class SessionRepositoryImpl implements SessionRepository {
     String sql = """
         SELECT id, client_id, computer_id, tariff_id, start_time, end_time, total_cost, is_active
         FROM sessions
-        WHERE is_active - true
+        WHERE is_active = true
         """;
     List<Session> sessions = new ArrayList<>();
 
@@ -109,14 +109,16 @@ public class SessionRepositoryImpl implements SessionRepository {
       stmt.setObject(3, entity.getComputerId());
       stmt.setObject(4, entity.getTariffId());
       stmt.setObject(5, entity.getStartTime());
-      stmt.setObject(6, entity.getStartTime());
+      stmt.setObject(6, entity.getEndTime());
+      stmt.setBigDecimal(7, entity.getTotalCost());
+      stmt.setBoolean(8, entity.isActive());
 
       int rowsAffected = stmt.executeUpdate();
       if (rowsAffected != 1) {
         throw new DatabaseException("Очікувався 1 рядок, вставлено: " + rowsAffected, null);
       }
     } catch (SQLException e) {
-      throw new DatabaseException("Помилка збереження сесіаці: " + entity.getId(), e);
+      throw new DatabaseException("Помилка збереження сесії: " + entity.getId(), e);
     }
   }
 
@@ -178,6 +180,31 @@ public class SessionRepositoryImpl implements SessionRepository {
 
   @Override
   public void update(Session entity) {
+    String sql = """
+        UPDATE sessions
+        SET start_time = ?,
+        end_time = ?,
+        total_cost = ?,
+        is_active = ?
+        WHERE id = ?
+        """;
+    try(Connection conn = connectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)){
+      stmt.setObject(1, entity.getStartTime());
+      stmt.setObject(2, entity.getEndTime());
+      stmt.setBigDecimal(3, entity.getTotalCost());
+      stmt.setBoolean(4, entity.isActive());
+      stmt.setObject(5, entity.getId());
+
+      int rowsAffected = stmt.executeUpdate();
+      if (rowsAffected == 0) {
+        throw new DatabaseException(
+            "Сесію з id=" + entity.getId() + " не знайдено для оновлення", null
+        );
+      }
+      } catch (SQLException e) {
+      throw new DatabaseException("Помилка оновлення сесії: " + entity.getId(), e);
+    }
   }
 
   private Session mapRow(ResultSet rs) throws SQLException {

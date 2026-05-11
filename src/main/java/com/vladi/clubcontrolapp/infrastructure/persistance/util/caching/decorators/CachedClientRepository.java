@@ -23,9 +23,13 @@ public class CachedClientRepository
 
   @Override
   public Optional<Client> findByEmail(String email) {
-    Optional<Client> client = clientDelegate.findByEmail(email);
-    client.ifPresent(c -> identityMap.put(c.getId(), c));
-    return client;
+    Optional<Client> fromDb = clientDelegate.findByEmail(email);
+    return fromDb.map(client -> {
+      Optional<Client> cached = identityMap.get(client.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(client.getId(), client);
+      return client;
+    });
   }
 
   @Override

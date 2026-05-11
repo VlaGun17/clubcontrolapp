@@ -19,8 +19,14 @@ public class CachedAdminRepository
 
   @Override
   public Optional<Admin> findByLogin(String login) {
-    Optional<Admin> admin = adminDelegate.findByLogin(login);
-    admin.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return admin;
+    Optional<Admin> fromDb = adminDelegate.findByLogin(login);
+    return fromDb.map(admin -> {
+      Optional<Admin> cached = identityMap.get(admin.getId());
+      if(cached.isPresent()){
+        return cached.get();
+      }
+      identityMap.put(admin.getId(), admin);
+      return admin;
+    });
   }
 }

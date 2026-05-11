@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
       stmt.setObject(3, entity.getSessionId());
       stmt.setBigDecimal(4, entity.getAmount());
       stmt.setObject(5, entity.getPaymentDate());
-      stmt.setObject(6, entity.getPaymentMethod());
+      stmt.setObject(6, entity.getPaymentMethod(), Types.OTHER);
 
       int rowsAffected = stmt.executeUpdate();
       if (rowsAffected != 1) {
@@ -181,6 +182,29 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
   @Override
   public void update(Payment entity) {
+    String sql = """
+        UPDATE payments
+        SET amount = ?,
+        payment_date = ?,
+        method = ?
+        WHERE id = ?
+        """;
+    try(Connection conn = connectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)){
+      stmt.setBigDecimal(1, entity.getAmount());
+      stmt.setObject(2, entity.getPaymentDate());
+      stmt.setObject(3, entity.getPaymentMethod(), Types.OTHER);
+      stmt.setObject(4, entity.getId());
+
+      int rowsAffected = stmt.executeUpdate();
+      if (rowsAffected == 0) {
+        throw new DatabaseException(
+            "Транкзакцію з id=" + entity.getId() + " не знайдено для оновлення", null
+        );
+      }
+    } catch (SQLException e) {
+      throw new DatabaseException("Помилка оновлення транкзакції: " + entity.getId(), e);
+    }
   }
 
   private Payment mapRow(ResultSet rs) throws SQLException {

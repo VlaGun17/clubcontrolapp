@@ -37,8 +37,12 @@ public class CachedComputerRepository
 
   @Override
   public Optional<Computer> findByNumber(int number) {
-    Optional<Computer> computer = computerDelegate.findByNumber(number);
-    computer.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return computer;
+    Optional<Computer> fromDb = computerDelegate.findByNumber(number);
+    return fromDb.map(computer -> {
+      Optional<Computer> cached = identityMap.get(computer.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(computer.getId(), computer);
+      return computer;
+    });
   }
 }

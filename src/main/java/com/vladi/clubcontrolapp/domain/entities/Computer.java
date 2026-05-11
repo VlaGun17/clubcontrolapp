@@ -15,8 +15,8 @@ public class Computer {
   public Computer(int computerNumber, String computerType, String computerStatus) {
     this.id = UUID.randomUUID();
     this.computerNumber = computerNumber;
-    this.computerType = String.valueOf(ComputerType.COMMON);
-    this.computerStatus = String.valueOf(ComputerStatus.AVAILABLE);
+    this.computerType = String.valueOf(ComputerType.Common);
+    this.computerStatus = String.valueOf(ComputerStatus.Available);
   }
 
   public Computer(UUID id, int computerNumber, String computerType, String computerStatus) {

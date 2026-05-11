@@ -23,9 +23,13 @@ public class CachedPaymentRepository
 
   @Override
   public Optional<Payment> findBySessionId(UUID sessionId) {
-    Optional<Payment> payment = paymentDelegate.findBySessionId(sessionId);
-    payment.ifPresent(entity -> identityMap.put(entity.getId(), entity));
-    return payment;
+    Optional<Payment> fromDb = paymentDelegate.findBySessionId(sessionId);
+    return fromDb.map(payment -> {
+      Optional<Payment> cached = identityMap.get(payment.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(payment.getId(), payment);
+      return payment;
+    });
   }
 
   @Override

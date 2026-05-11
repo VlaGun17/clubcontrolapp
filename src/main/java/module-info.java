@@ -3,8 +3,8 @@ module com.vladi.clubcontrolapp {
   requires javafx.fxml;
   requires flyway.core;
   requires java.sql;
-  requires com.vladi.clubcontrolapp;
 
   opens com.vladi.clubcontrolapp to javafx.fxml;
+  opens db.migration;
   exports com.vladi.clubcontrolapp;
 }
