@@ -6,6 +6,7 @@ import com.vladi.clubcontrolapp.domain.entities.Computer;
 import com.vladi.clubcontrolapp.domain.entities.Payment;
 import com.vladi.clubcontrolapp.domain.entities.Service;
 import com.vladi.clubcontrolapp.domain.entities.Session;
+import com.vladi.clubcontrolapp.domain.entities.SessionService;
 import com.vladi.clubcontrolapp.domain.entities.Tariff;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.AdminRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.ClientRepository;
@@ -13,6 +14,7 @@ import com.vladi.clubcontrolapp.infrastructure.persistance.contract.ComputerRepo
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.PaymentRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.ServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.SessionRepository;
+import com.vladi.clubcontrolapp.infrastructure.persistance.contract.SessionServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.TariffRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.ConnectionManager;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.exception.DatabaseException;
@@ -32,6 +34,7 @@ public class JdbcUnitOfWork implements UnitOfWork{
   private final ServiceRepository serviceRepository;
   private final SessionRepository sessionRepository;
   private final TariffRepository tariffRepository;
+  private final SessionServiceRepository sessionServiceRepository;
 
   private final SequencedSet<Object> newEntities = new LinkedHashSet<>();
   private final SequencedSet<Object> dirtyEntities = new LinkedHashSet<>();
@@ -44,7 +47,8 @@ public class JdbcUnitOfWork implements UnitOfWork{
       PaymentRepository paymentRepository,
       ServiceRepository serviceRepository,
       SessionRepository sessionRepository,
-      TariffRepository tariffRepository){
+      TariffRepository tariffRepository,
+      SessionServiceRepository sessionServiceRepository){
     this.connectionManager = connectionManager;
     this.clientRepository = clientRepository;
     this.adminRepository = adminRepository;
@@ -53,6 +57,7 @@ public class JdbcUnitOfWork implements UnitOfWork{
     this.serviceRepository = serviceRepository;
     this.sessionRepository = sessionRepository;
     this.tariffRepository = tariffRepository;
+    this.sessionServiceRepository = sessionServiceRepository;
   }
 
   @Override
@@ -144,6 +149,9 @@ public class JdbcUnitOfWork implements UnitOfWork{
     }
     for(Object entity : newEntities){
       if(entity instanceof Payment p) paymentRepository.save(p);
+    }
+    for(Object entity : newEntities){
+      if(entity instanceof SessionService ss) sessionServiceRepository.save(ss);
     }
   }
 

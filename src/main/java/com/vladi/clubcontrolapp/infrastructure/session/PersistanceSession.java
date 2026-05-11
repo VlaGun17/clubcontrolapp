@@ -6,6 +6,7 @@ import com.vladi.clubcontrolapp.domain.entities.Computer;
 import com.vladi.clubcontrolapp.domain.entities.Payment;
 import com.vladi.clubcontrolapp.domain.entities.Service;
 import com.vladi.clubcontrolapp.domain.entities.Session;
+import com.vladi.clubcontrolapp.domain.entities.SessionService;
 import com.vladi.clubcontrolapp.domain.entities.Tariff;
 import com.vladi.clubcontrolapp.domain.enums.ComputerStatus;
 import com.vladi.clubcontrolapp.domain.enums.ComputerType;
@@ -15,6 +16,7 @@ import com.vladi.clubcontrolapp.infrastructure.persistance.contract.ComputerRepo
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.PaymentRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.ServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.SessionRepository;
+import com.vladi.clubcontrolapp.infrastructure.persistance.contract.SessionServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.contract.TariffRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.AdminRepositoryImpl;
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.ClientRepositoryImpl;
@@ -22,6 +24,7 @@ import com.vladi.clubcontrolapp.infrastructure.persistance.impl.ComputerReposito
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.PaymentRepositoryImpl;
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.ServiceRepositoryImpl;
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.SessionRepositoryImpl;
+import com.vladi.clubcontrolapp.infrastructure.persistance.impl.SessionServiceRepositoryImpl;
 import com.vladi.clubcontrolapp.infrastructure.persistance.impl.TariffRepositoryImpl;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.ConnectionManager;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.CachedJdbcRepository;
@@ -31,6 +34,7 @@ import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorato
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorators.CachedPaymentRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorators.CachedServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorators.CachedSessionRepository;
+import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorators.CachedSessionServiceRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.caching.decorators.CachedTariffRepository;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.uow.JdbcUnitOfWork;
 import java.math.BigDecimal;
@@ -50,6 +54,7 @@ public class PersistanceSession {
   private final ServiceRepository serviceRepository;
   private final SessionRepository sessionRepository;
   private final PaymentRepository paymentRepository;
+  private final SessionServiceRepository sessionServiceRepository;
 
   public PersistanceSession(ConnectionManager connectionManager){
     this.connectionManager = connectionManager;
@@ -60,6 +65,7 @@ public class PersistanceSession {
     ServiceRepository baseServiceRepo = new ServiceRepositoryImpl(connectionManager);
     SessionRepository baseSessionRepo = new SessionRepositoryImpl(connectionManager);
     PaymentRepository basePaymentRepo = new PaymentRepositoryImpl(connectionManager);
+    SessionServiceRepository baseSessionServiceRepo = new SessionServiceRepositoryImpl(connectionManager);
 
     this.clientRepository = new CachedClientRepository(baseClientRepo);
     this.adminRepository = new CachedAdminRepository(baseAdminRepo);
@@ -68,8 +74,9 @@ public class PersistanceSession {
     this.serviceRepository = new CachedServiceRepository(baseServiceRepo);
     this.sessionRepository = new CachedSessionRepository(baseSessionRepo);
     this.paymentRepository = new CachedPaymentRepository(basePaymentRepo);
+    this.sessionServiceRepository = new CachedSessionServiceRepository(baseSessionServiceRepo);
 
-    this.unitOfWork = new JdbcUnitOfWork(connectionManager, clientRepository, adminRepository, computerRepository, paymentRepository, serviceRepository, sessionRepository, tariffRepository);
+    this.unitOfWork = new JdbcUnitOfWork(connectionManager, clientRepository, adminRepository, computerRepository, paymentRepository, serviceRepository, sessionRepository, tariffRepository, sessionServiceRepository);
   }
 
   // --- CLIENTS ---
@@ -149,6 +156,9 @@ public class PersistanceSession {
 
   public Optional<Admin> getAdminByLogin(String login) {
     return adminRepository.findByLogin(login);
+  }
+  public Optional<Admin> findById(UUID id){
+    return adminRepository.findById(id);
   }
 
   // --- TARIFFS ---
@@ -233,9 +243,22 @@ public class PersistanceSession {
         .toList();
   }
 
+  public void addServiceToSession(Session session, SessionService sessionService){
+    unitOfWork.registerNew(sessionService);
+    session.getServices().add(sessionService);
+  }
+
+  public List<SessionService> getServicesForSession(UUID sessionId) {
+    return sessionServiceRepository.findBySessionId(sessionId);
+  }
+
   // --- PAYMENTS ---
   public Optional<Payment> getPaymentBySession(UUID sessionId) {
     return paymentRepository.findBySessionId(sessionId);
+  }
+
+  public Optional<Payment> getPayment(UUID id){
+    return paymentRepository.findById(id);
   }
 
   public void addPayments(Payment payment){
