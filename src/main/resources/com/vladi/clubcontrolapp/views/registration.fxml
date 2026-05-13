@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="550.0"
+  style="-fx-background-color: #1e1e24;"
+  xmlns="http://javafx.com/javafx/17"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.RegistrationController">
+
+  <padding>
+    <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+  </padding>
+
+  <Label text="REGISTRATION" textFill="#4cc9f0">
+    <font>
+      <Font name="System Bold" size="28.0" />
+    </font>
+    <VBox.margin>
+      <Insets bottom="10.0" />
+    </VBox.margin>
+  </Label>
+
+  <Label text="Створення аккаунта адміністратора" textFill="WHITE" />
+
+  <TextField fx:id="loginField" promptText="Логін"
+    style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-prompt-text-fill: #888; -fx-background-radius: 5;"/>
+
+  <PasswordField fx:id="passwordField" promptText="Пароль"
+    style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-prompt-text-fill: #888; -fx-background-radius: 5;"/>
+
+  <PasswordField fx:id="confirmPasswordField" promptText="Підтвердіть пароль"
+    style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-prompt-text-fill: #888; -fx-background-radius: 5;"/>
+
+  <Label fx:id="errorLabel" textFill="#f44336" wrapText="true" style="-fx-font-size: 12;" />
+
+  <Button text="ЗАРЕЄСТРУВАТИСЯ" onAction="#handleRegistration" maxWidth="Infinity"
+    style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10; -fx-cursor: hand;"/>
+
+  <Hyperlink text="Вже є аккаунт? Увійти" onAction="#handleShowLogin" textFill="#4cc9f0" />
+
+</VBox>

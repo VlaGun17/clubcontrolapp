@@ -17,7 +17,7 @@ public record PoolConfig(
 
   public static PoolConfig forH2(String path){
     return new PoolConfig(
-        "jdbc:h2:" + path + ";MODE=PostgreSQL;",
+        "jdbc:h2:" + path + ";MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1",
         "sa",
         "",
         2,

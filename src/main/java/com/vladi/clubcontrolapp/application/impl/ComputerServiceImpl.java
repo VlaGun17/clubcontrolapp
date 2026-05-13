@@ -21,6 +21,11 @@ public class ComputerServiceImpl implements ComputerService {
   }
 
   @Override
+  public List<Computer> getAllComputers() {
+    return session.getAllComputers();
+  }
+
+  @Override
   public Optional<Computer> getByNumber(int number) {
     return session.getComputerByNumber(number);
   }

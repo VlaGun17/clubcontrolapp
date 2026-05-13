@@ -1,0 +1,13 @@
+.root {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.button:hover {
+    -fx-background-color: #5a078f; /* Темніший фіолетовий при наведенні */
+}
+
+.text-field:focused {
+    -fx-border-color: #4cc9f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}

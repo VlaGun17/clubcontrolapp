@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" prefWidth="400.0" prefHeight="450.0"
+  style="-fx-background-color: #1e1e24;"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.AddComputerController">
+
+  <padding>
+    <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+  </padding>
+
+  <Label text="ДОДАТИ КОМП'ЮТЕР" textFill="#4cc9f0">
+    <font>
+      <Font name="System Bold" size="22.0" />
+    </font>
+  </Label>
+
+  <VBox spacing="10.0">
+    <Label text="Номер комп'ютера" textFill="WHITE" />
+    <TextField fx:id="numberField" promptText="Наприклад: 15"
+      style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
+  </VBox>
+
+  <VBox spacing="10.0">
+    <Label text="Тип комп'ютера" textFill="WHITE" />
+    <ComboBox fx:id="typeComboBox" prefWidth="Infinity"
+      style="-fx-background-color: #2a2a32; -fx-mark-color: #4cc9f0;" />
+  </VBox>
+
+  <Label fx:id="errorLabel" textFill="#f44336" wrapText="true" />
+
+  <HBox spacing="15.0" alignment="CENTER">
+    <Button text="СКАСУВАТИ" onAction="#handleCancel" prefWidth="120.0"
+      style="-fx-background-color: transparent; -fx-text-fill: #ccc; -fx-border-color: #ccc; -fx-border-radius: 5;" />
+    <Button text="ЗБЕРЕГТИ" onAction="#handleSave" prefWidth="120.0"
+      style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-background-radius: 5;" />
+  </HBox>
+</VBox>

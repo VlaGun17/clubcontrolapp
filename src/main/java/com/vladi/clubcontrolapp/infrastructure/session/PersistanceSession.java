@@ -137,6 +137,10 @@ public class PersistanceSession {
     return computerRepository.findByComputerStatus(computerStatus);
   }
 
+  public List<Computer> getAllComputers(){
+    return computerRepository.findAll();
+  }
+
   // --- ADMINS ---
   public Optional<Admin> getAdmin(UUID id) {
     return adminRepository.findById(id);

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" prefWidth="180.0" prefHeight="220.0"
+  style="-fx-background-color: #2a2a32; -fx-background-radius: 15; -fx-border-color: #4cc9f0; -fx-border-radius: 15; -fx-border-width: 2;"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+  <padding><Insets top="15" bottom="15" left="10" right="10"/></padding>
+
+  <HBox alignment="TOP_RIGHT" prefWidth="Infinity">
+    <Button fx:id="deleteBtn" id="deleteBtn" text="✕"
+      style="-fx-background-color: transparent; -fx-text-fill: #f44336; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 0 5 0 0;">
+      <font><Font size="16.0" /></font>
+    </Button>
+  </HBox>
+
+  <Label fx:id="nameLabel" text="PC-01" textFill="WHITE">
+    <font><Font name="System Bold" size="20.0" /></font>
+  </Label>
+
+  <Label text="VIP ZONE" textFill="#4cc9f0" style="-fx-font-size: 10;">
+    <VBox.margin><Insets bottom="10"/></VBox.margin>
+  </Label>
+
+  <Region prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #4caf50; -fx-shape: 'M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z';" />
+
+  <Label fx:id="statusLabel" id="statusLabel" text="ВІЛЬНИЙ" textFill="#4caf50">
+    <font><Font name="System Bold" size="14.0" /></font>
+    <VBox.margin><Insets top="10" bottom="15"/></VBox.margin>
+  </Label>
+
+  <Button fx:id="actionBtn" id="actionBtn" text="ЗАНЯТИ" prefWidth="Infinity" style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-background-radius: 20;"/>
+</VBox>

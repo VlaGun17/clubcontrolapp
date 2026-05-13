@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ComputerService extends BaseService<Computer, UUID> {
   List<Computer> getAvailableComputers();
   Optional<Computer> getByNumber(int number);
+  List<Computer> getAllComputers();
 }

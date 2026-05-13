@@ -206,8 +206,8 @@ public class ComputerRepositoryImpl implements ComputerRepository {
     return new Computer(
         rs.getObject("id", UUID.class),
         rs.getInt("comp_number"),
-        String.valueOf(rs.getObject("type", ComputerType.class)),
-        String.valueOf(rs.getObject("status", ComputerStatus.class))
+        rs.getString("type"),   // Якщо ваш конструктор приймає String
+        rs.getString("status")
     );
   }
 }
