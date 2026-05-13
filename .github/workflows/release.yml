@@ -1,0 +1,141 @@
+name: Release — Build ClubControl Installers
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-installers:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Install WiX Toolset (Windows only)
+        if: matrix.os == 'windows-latest'
+        run: choco install wixtoolset --yes
+
+      - name: Install RPM packaging tools (Linux only)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm fakeroot
+
+      - name: Build Fat JAR
+        run: mvn clean package -DskipTests
+
+      - name: Prepare jpackage input
+        shell: bash
+        run: |
+          mkdir -p jpackage-input
+          cp target/clubcontrolapp-fat.jar jpackage-input/
+
+      - name: Extract version from tag
+        id: version
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      # --- WINDOWS PACKAGE (.msi) ---
+      - name: Package installer (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          jpackage `
+            --type msi `
+            --name "ClubControl" `
+            --app-version "${{ steps.version.outputs.VERSION }}" `
+            --vendor "Vladi Dev" `
+            --input jpackage-input/ `
+            --main-jar clubcontrolapp-fat.jar `
+            --main-class com.vladi.clubcontrolapp.Launcher `
+            --icon packaging/windows/clubcontrol.ico `
+            --dest dist/ `
+            --win-dir-chooser `
+            --win-menu `
+            --win-shortcut
+
+      # --- LINUX PACKAGE (.deb & .rpm) ---
+      - name: Package installer (Linux DEB & RPM)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          # DEB
+          jpackage \
+            --type deb \
+            --name "clubcontrol" \
+            --app-version "${{ steps.version.outputs.VERSION }}" \
+            --vendor "Vladi Dev" \
+            --input jpackage-input/ \
+            --main-jar clubcontrolapp-fat.jar \
+            --main-class com.vladi.clubcontrolapp.Launcher \
+            --icon packaging/linux/clubcontrol.png \
+            --dest dist/ \
+            --linux-package-name "clubcontrol-app" \
+            --linux-shortcut
+
+          # RPM
+          jpackage \
+            --type rpm \
+            --name "clubcontrol" \
+            --app-version "${{ steps.version.outputs.VERSION }}" \
+            --vendor "Vladi Dev" \
+            --input jpackage-input/ \
+            --main-jar clubcontrolapp-fat.jar \
+            --main-class com.vladi.clubcontrolapp.Launcher \
+            --icon packaging/linux/clubcontrol.png \
+            --dest dist/ \
+            --linux-shortcut
+          
+          # Також додаємо сам JAR у дистрибутив
+          cp target/clubcontrolapp-fat.jar dist/
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.os }}
+          path: dist/
+          retention-days: 1
+
+  publish-release:
+    needs: build-installers
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all installer artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: installers/
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "ClubControl ${{ github.ref_name }}"
+          body: |
+            ## Реліз системи керування клубом `${{ github.ref_name }}`
+
+            ### Доступні інсталятори:
+            * **Windows**: інсталятор `.msi`
+            * **Linux (Ubuntu/Debian)**: пакет `.deb`
+            * **Linux (Fedora/CentOS)**: пакет `.rpm`
+            * **Універсальний**: файл `.jar` (вимагає встановленої Java 21+)
+
+            ---
+            *Побудовано автоматично за допомогою GitHub Actions.*
+          files: installers/**
+          draft: false
+          prerelease: false

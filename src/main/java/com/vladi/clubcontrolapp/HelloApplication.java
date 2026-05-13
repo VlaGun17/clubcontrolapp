@@ -1,6 +1,7 @@
 package com.vladi.clubcontrolapp;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,5 +17,10 @@ public class HelloApplication extends Application {
     stage.setTitle("Hello!");
     stage.setScene(scene);
     stage.show();
+
+    stage.setOnCloseRequest(windowEvent -> {
+      Platform.exit();
+      System.exit(0);
+    });
   }
 }
