@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="20.0" prefWidth="350.0" style="-fx-background-color: #2a2a32; -fx-padding: 25;"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.ManageClientController">
+
+  <HBox alignment="CENTER_LEFT">
+    <Label text="КЕРУВАННЯ КЛІЄНТОМ" textFill="#4cc9f0">
+      <font><Font name="System Bold" size="20.0" /></font>
+    </Label>
+    <Region HBox.hgrow="ALWAYS" />
+    <Button text="✕" onAction="#handleClose"
+      style="-fx-background-color: transparent; -fx-text-fill: #ccc; -fx-font-size: 18px; -fx-cursor: hand;" />
+  </HBox>
+
+  <Separator opacity="0.1" />
+
+  <VBox spacing="8.0">
+    <Label fx:id="clientNicknameLabel" text="Gamer_777" textFill="WHITE">
+      <font><Font name="System Bold" size="24.0" /></font>
+    </Label>
+
+    <HBox spacing="5.0" alignment="CENTER_LEFT">
+      <Label text="Баланс:" textFill="#ccc">
+        <font><Font size="14.0" /></font>
+      </Label>
+      <Label fx:id="balanceLabel" text="150.00 ₴" textFill="#4caf50">
+        <font><Font name="System Bold" size="16.0" /></font>
+      </Label>
+    </HBox>
+
+    <HBox spacing="5.0" alignment="CENTER_LEFT">
+      <Label text="Статус:" textFill="#ccc">
+        <font><Font size="14.0" /></font>
+      </Label>
+      <Label fx:id="statusLabel" text="У грі (ПК-5)" textFill="#4cc9f0">
+        <font><Font name="System Bold" size="14.0" /></font>
+      </Label>
+    </HBox>
+  </VBox>
+
+  <Separator opacity="0.1" />
+
+  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS"
+    style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;">
+
+    <StackPane>
+      <VBox fx:id="activeSessionBox" spacing="12.0" visible="true" managed="true">
+        <Label text="Керування поточною сесією:" textFill="#ccc">
+          <font><Font size="13.0" /></font>
+        </Label>
+
+        <Button text="Пересадити за інший ПК" onAction="#handleTransferClient" prefWidth="Infinity" prefHeight="40.0"
+          style="-fx-background-color: transparent; -fx-border-color: #7209b7; -fx-text-fill: white; -fx-border-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+        <VBox fx:id="transferFormBox" spacing="12.0" visible="false" managed="false"
+          style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #7209b7; -fx-border-radius: 5;">
+
+          <Label text="Пересадка клієнта:" textFill="#7209b7" style="-fx-font-weight: bold; -fx-font-size: 14.0;" />
+
+          <VBox spacing="5.0">
+            <Label text="Оберіть новий комп'ютер:" textFill="#ccc" style="-fx-font-size: 12.0;" />
+            <ComboBox fx:id="targetComputerComboBox" promptText="Доступні вільні ПК" maxWidth="Infinity"
+              style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
+          </VBox>
+
+          <HBox spacing="10.0" alignment="CENTER">
+            <Button text="Пересадити" onAction="#handleConfirmTransfer" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+              style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+            <Button text="Скасувати" onAction="#handleCancelTransfer" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+              style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-text-fill: white; -fx-border-radius: 5; -fx-cursor: hand;" />
+          </HBox>
+        </VBox>
+
+        <Button text="Зупинити сесію" onAction="#handleStopSession" prefWidth="Infinity" prefHeight="40.0"
+          style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+        <VBox fx:id="endSessionFormBox" spacing="12.0" visible="false" managed="false"
+          style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #f44336; -fx-border-radius: 5;">
+
+          <Label text="Завершення сесії та оплата:" textFill="#f44336" style="-fx-font-weight: bold; -fx-font-size: 14.0;" />
+
+          <HBox spacing="5.0" alignment="CENTER_LEFT">
+            <Label text="Сума до сплати:" textFill="#ccc" />
+            <Label fx:id="totalCostLabel" text="0.00 ₴" textFill="#4caf50" style="-fx-font-weight: bold; -fx-font-size: 15.0;" />
+          </HBox>
+
+          <ComboBox fx:id="paymentMethodComboBox" promptText="Оберіть метод оплати" maxWidth="Infinity"
+            style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
+
+          <HBox spacing="10.0" alignment="CENTER_RIGHT">
+            <Button text="Скасувати" onAction="#handleCancelEndSessionForm" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+              style="-fx-background-color: transparent; -fx-text-fill: #ccc; -fx-cursor: hand;" />
+            <Button text="Підтвердити" onAction="#handleConfirmEndSession" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+              style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+          </HBox>
+        </VBox>
+      </VBox>
+
+      <VBox fx:id="idleSessionBox" spacing="12.0" visible="false" managed="false">
+        <Label text="Сесія не активна:" textFill="#ccc">
+          <font><Font size="13.0" /></font>
+        </Label>
+
+        <Button text="Запустити сесію" onAction="#handleStartSession" prefWidth="Infinity" prefHeight="45.0"
+          style="-fx-background-color: #4cc9f0; -fx-text-fill: #1e1e24; -fx-background-radius: 5; -fx-font-weight: bold; -fx-font-size: 14.0; -fx-cursor: hand;" />
+        <VBox fx:id="startSessionFormBox" spacing="10" visible="false" managed="false"
+          style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444; -fx-border-radius: 5;">
+          <Label text="Оберіть ПК:" textFill="#4cc9f0"/>
+          <ComboBox fx:id="computerComboBox" prefWidth="Infinity" style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
+          <Label text="Оберіть тариф:" textFill="#4cc9f0"/>
+          <ComboBox fx:id="tariffComboBox" prefWidth="Infinity" style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
+          <Label text="Час (години):" textFill="#4cc9f0"/>
+          <TextField fx:id="durationField" promptText="Наприклад: 2" style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
+          <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Скасувати" onAction="#handleCancelStartSession" style="-fx-background-color: transparent; -fx-text-fill: #ccc; -fx-cursor: hand;"/>
+            <Button text="Підтвердити" onAction="#handleConfirmStartSession" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+          </HBox>
+        </VBox>
+      </VBox>
+    </StackPane>
+
+  </ScrollPane>
+
+  <Separator opacity="0.1" />
+
+  <VBox spacing="12.0">
+    <Button text="Інформація про користувача" onAction="#handleShowClientInfo" prefWidth="Infinity" prefHeight="40.0"
+      style="-fx-background-color: #1e1e24; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444; -fx-border-radius: 5; -fx-cursor: hand;" />
+    <VBox fx:id="userInfoFormBox" spacing="15.0" visible="false" managed="false"
+      style="-fx-background-color: #1e1e24; -fx-padding: 20; -fx-background-radius: 5; -fx-border-color: #4cc9f0; -fx-border-radius: 5;">
+
+      <Label text="ІНФОРМАЦІЯ ПРО КОРИСТУВАЧА" textFill="#4cc9f0" style="-fx-font-weight: bold; -fx-font-size: 14.0;" />
+
+      <GridPane hgap="15.0" vgap="10.0">
+        <columnConstraints>
+          <ColumnConstraints minWidth="130.0" prefWidth="130.0"/>
+          <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+        <Label text="Нікнейм:" textFill="#ccc" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label fx:id="infoNicknameLabel" text="-" textFill="WHITE" style="-fx-font-weight: bold;"
+          GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Email:" textFill="#ccc" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label fx:id="infoEmailLabel" text="-" textFill="WHITE" GridPane.columnIndex="1"
+          GridPane.rowIndex="1"/>
+
+        <Label text="Баланс:" textFill="#ccc" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <Label fx:id="infoBalanceLabel" text="0.00 ₴" textFill="#4caf50"
+          style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Персональна знижка:" textFill="#ccc" GridPane.columnIndex="0"
+          GridPane.rowIndex="3"/>
+        <Label fx:id="infoDiscountLabel" text="0%" textFill="WHITE" GridPane.columnIndex="1"
+          GridPane.rowIndex="3"/>
+
+        <Label text="Кількість візитів:" textFill="#ccc" GridPane.columnIndex="0"
+          GridPane.rowIndex="4"/>
+        <Label fx:id="infoVisitCountLabel" text="0" textFill="WHITE" GridPane.columnIndex="1"
+          GridPane.rowIndex="4"/>
+
+        <Label text="Дата реєстрації:" textFill="#ccc" GridPane.columnIndex="0"
+          GridPane.rowIndex="5"/>
+        <Label fx:id="infoRegistrationDateLabel" text="-:-" textFill="WHITE"
+          GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+      </GridPane>
+
+      <Button text="Закрити" onAction="#handleCloseClientInfo" prefWidth="Infinity" prefHeight="35.0"
+        style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" />
+    </VBox>
+    <Button text="Поповнити баланс" onAction="#handleTopUpBalance" prefWidth="Infinity" prefHeight="40.0"
+      style="-fx-background-color: #1e1e24; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444; -fx-border-radius: 5; -fx-cursor: hand;" />
+    <VBox fx:id="topUpFormBox" spacing="12.0" visible="false" managed="false"
+      style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #4caf50; -fx-border-radius: 5;">
+
+      <Label text="Поповнення балансу аккаунта:" textFill="#4caf50" style="-fx-font-weight: bold; -fx-font-size: 14.0;" />
+
+      <VBox spacing="5.0">
+        <Label text="Сума поповнення (₴):" textFill="#ccc" style="-fx-font-size: 12.0;" />
+        <TextField fx:id="topUpAmountField" promptText="Введіть суму, напр. 200"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444;" />
+      </VBox>
+
+      <VBox spacing="5.0">
+        <Label text="Метод внесення коштів:" textFill="#ccc" style="-fx-font-size: 12.0;" />
+        <ComboBox fx:id="topUpMethodComboBox" promptText="Оберіть метод" maxWidth="Infinity"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
+      </VBox>
+
+      <HBox spacing="10.0" alignment="CENTER">
+        <Button text="Поповнити" onAction="#handleConfirmTopUp" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+          style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+        <Button text="Скасувати" onAction="#handleCancelTopUp" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+          style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-text-fill: white; -fx-border-radius: 5; -fx-cursor: hand;" />
+      </HBox>
+    </VBox>
+
+    <Button text="Редагувати профіль" onAction="#handleEditProfile" prefWidth="Infinity" prefHeight="40.0"
+      style="-fx-background-color: #1e1e24; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444; -fx-border-radius: 5; -fx-cursor: hand;" />
+    <VBox fx:id="editProfileFormBox" spacing="12.0" visible="false" managed="false"
+      style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #4cc9f0; -fx-border-radius: 5;">
+
+      <Label text="Редагування даних гравця:" textFill="#4cc9f0" style="-fx-font-weight: bold; -fx-font-size: 14.0;" />
+
+      <VBox spacing="5.0">
+        <Label text="Нікнейм (ID профілю):" textFill="#ccc" style="-fx-font-size: 12.0;" />
+        <TextField fx:id="editNicknameField" promptText="Нікнейм"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444;" />
+      </VBox>
+
+      <VBox spacing="5.0">
+        <Label text="Контактний Email:" textFill="#ccc" style="-fx-font-size: 12.0;" />
+        <TextField fx:id="editEmailField" promptText="example@domain.com"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444;" />
+      </VBox>
+
+      <VBox spacing="5.0">
+        <Label text="Персональна знижка (%):" textFill="#ccc" style="-fx-font-size: 12.0;" />
+        <TextField fx:id="editDiscountField" promptText="Від 0 до 100"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: #444;" />
+      </VBox>
+
+      <HBox spacing="10.0" alignment="CENTER">
+        <Button text="Зберегти" onAction="#handleConfirmEditProfile" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+          style="-fx-background-color: #4cc9f0; -fx-text-fill: #1e1e24; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+        <Button text="Скасувати" onAction="#handleCancelEditProfile" maxWidth="Infinity" HBox.hgrow="ALWAYS" prefHeight="35.0"
+          style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-text-fill: white; -fx-border-radius: 5; -fx-cursor: hand;" />
+      </HBox>
+    </VBox>
+
+    <Button text="Заблокувати клієнта" onAction="#handleBanClient" prefWidth="Infinity" prefHeight="40.0"
+      style="-fx-background-color: transparent; -fx-border-color: #f44336; -fx-text-fill: #f44336; -fx-border-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" />
+  </VBox>
+
+  <Label fx:id="errorLabel"  text="" textFill="#f44336" wrapText="true" style="-fx-font-size: 13.0;" />
+
+</VBox>

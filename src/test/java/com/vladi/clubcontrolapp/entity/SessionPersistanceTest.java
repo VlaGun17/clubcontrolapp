@@ -33,7 +33,6 @@ public class SessionPersistanceTest extends BasePersistenceTest {
     session.addTariff(new Tariff(tariffId, "Night", BigDecimal.valueOf(50.0), true));
     session.commit();
 
-    // Тест сесії
     UUID sessionId = UUID.randomUUID();
     Session gameSession = new Session(sessionId, clientId, compId, tariffId,
         LocalDateTime.now(), null, BigDecimal.ZERO, true);

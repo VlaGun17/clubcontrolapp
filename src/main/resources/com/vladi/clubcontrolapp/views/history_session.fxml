@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.HistorySessionController"
+  style="-fx-background-color: #141419;" prefWidth="1000.0" prefHeight="600.0" spacing="15.0" stylesheets="@../css/list_style.css">
+
+  <padding>
+    <Insets top="20" right="20" bottom="20" left="20"/>
+  </padding>
+
+  <VBox HBox.hgrow="ALWAYS" spacing="15.0">
+    <Label text="ІСТОРІЯ СЕСІЙ ТА ЛОГИ" textFill="#4cc9f0">
+      <font>
+        <Font name="System Bold" size="20.0" />
+      </font>
+    </Label>
+
+    <TableView fx:id="sessionTableView" VBox.vgrow="ALWAYS"
+      style="-fx-background-color: #1e1e24; -fx-base: #1e1e24; -fx-table-cell-border-color: #2a2a32;">
+      <columns>
+        <TableColumn fx:id="clientColumn" text="Клієнт" prefWidth="130.0" />
+        <TableColumn fx:id="computerColumn" text="Комп'ютер" prefWidth="90.0" style="-fx-alignment: CENTER;" />
+        <TableColumn fx:id="tariffColumn" text="Тариф" prefWidth="120.0" />
+        <TableColumn fx:id="startTimeColumn" text="Початок" prefWidth="140.0" />
+        <TableColumn fx:id="endTimeColumn" text="Завершення" prefWidth="140.0" />
+        <TableColumn fx:id="totalCostColumn" text="Сума" prefWidth="100.0" style="-fx-alignment: CENTER-RIGHT;" />
+        <TableColumn fx:id="statusColumn" text="Статус" prefWidth="100.0" style="-fx-alignment: CENTER;" />
+      </columns>
+      <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+    </TableView>
+  </VBox>
+
+  <VBox prefWidth="280.0" spacing="15.0"
+    style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 10; -fx-border-color: #2a2a32; -fx-border-radius: 10;">
+
+    <Label text="Додаткові послуги сесії" textFill="#7209b7" style="-fx-font-weight: bold;">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Label>
+
+    <ListView fx:id="servicesListView" VBox.vgrow="ALWAYS"
+      styleClass="dark-list-view"
+      style="-fx-background-radius: 5;"/>
+
+    <HBox alignment="CENTER_RIGHT" spacing="5.0">
+      <Label text="Всього за послуги:" textFill="#ccc" style="-fx-font-size: 11;" />
+      <Label fx:id="servicesTotalLabel" text="0.00 ₴" textFill="#4caf50" style="-fx-font-weight: bold;" />
+    </HBox>
+  </VBox>
+</HBox>

@@ -38,7 +38,7 @@ public class PaymentPersistanceTest extends BasePersistenceTest {
     session.commit();
 
     UUID paymentId = UUID.randomUUID();
-    Payment payment = new Payment(paymentId, clientId, sessionId, BigDecimal.valueOf(500), LocalDate.now(),
+    Payment payment = new Payment(paymentId, clientId, sessionId, BigDecimal.valueOf(500), LocalDateTime.now(),
         MethodPayment.Cash.name());
 
     session.addPayments(payment);

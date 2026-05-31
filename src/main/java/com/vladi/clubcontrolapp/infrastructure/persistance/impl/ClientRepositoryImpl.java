@@ -70,6 +70,28 @@ public class ClientRepositoryImpl implements ClientRepository {
   }
 
   @Override
+  public Optional<Client> findByLogin(String login) {
+    String sql  = """
+        SELECT id, nickname, email, balance, discount_percent, visit_count, registration_date
+        FROM clients
+        WHERE nickname = ?
+        """;
+    try(Connection conn = connectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+      stmt.setString(1, login);
+
+      try(ResultSet rs = stmt.executeQuery()){
+        if(rs.next()) {
+          return Optional.of(mapRow(rs));
+        }
+        return Optional.empty();
+      }
+    } catch (SQLException e) {
+      throw new DatabaseException("Помилка пошуку клієнта за login=" + login, e);
+    }
+  }
+
+  @Override
   public List<Client> findByRegistrationDate(LocalDate registrationDate) {
     String sql  = """
         SELECT id, nickname, email, balance, discount_percent, visit_count, registration_date

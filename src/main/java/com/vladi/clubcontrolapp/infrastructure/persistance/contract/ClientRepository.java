@@ -14,5 +14,7 @@ public interface ClientRepository extends Repository<Client, UUID> {
 
   List<Client> findByRegistrationDate(LocalDate registrationDate);
 
+  Optional<Client> findByLogin(String login);
+
   long count();
 }

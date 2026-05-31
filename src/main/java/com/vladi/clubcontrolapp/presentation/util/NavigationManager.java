@@ -7,14 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class NavigationManager {
-  public static void navigate(Stage stage, String fxmlPath) {
+  public static Parent loadView(String fxmlPath) {
     try {
       FXMLLoader loader = new FXMLLoader(NavigationManager.class.getResource(fxmlPath));
-      Parent root = loader.load();
-      stage.setScene(new Scene(root));
-      stage.show();
+      return loader.load();
     } catch (IOException e) {
       e.printStackTrace();
+      return null;
     }
   }
 }

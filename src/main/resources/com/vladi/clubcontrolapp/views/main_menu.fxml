@@ -5,46 +5,66 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:controller="com.vladi.clubcontrolapp.presentation.controller.MainMenuController" prefWidth="1080.0" style="-fx-background-color: #1e1e24;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.vladi.clubcontrolapp.presentation.controller.MainMenuController"
+  prefWidth="1080.0" style="-fx-background-color: #1e1e24;"
+  xmlns="http://javafx.com/javafx/17"
+  xmlns:fx="http://javafx.com/fxml/1"
+  stylesheets="@../css/style.css">
 
   <left>
-    <VBox spacing="10.0" prefWidth="200.0" style="-fx-background-color: #2a2a32;">
+    <VBox spacing="8.0" prefWidth="240.0" styleClass="sidebar" stylesheets="@../css/LeftPanelStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
       <padding>
-        <Insets top="20" left="10" right="10"/>
+        <Insets top="25" left="15" right="15" bottom="15"/>
       </padding>
-      <Label text="CLUB ADMIN" textFill="#4cc9f0">
-        <font><Font name="System Bold" size="18.0" /></font>
-        <VBox.margin><Insets bottom="20"/></VBox.margin>
-      </Label>
 
-      <Button text="Комп'ютери" prefWidth="Infinity" style="-fx-background-color: #7209b7; -fx-text-fill: white;"/>
-      <Button text="Клієнти" prefWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #ccc;"/>
-      <Button text="Тарифи" prefWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #ccc;"/>
+      <VBox alignment="CENTER" styleClass="logo-container">
+        <Label text="CLUB" styleClass="logo-text-white"/>
+        <Label text="CONTROL" styleClass="logo-text-accent"/>
+        <VBox.margin><Insets bottom="30"/></VBox.margin>
+      </VBox>
 
-      <Region VBox.vgrow="ALWAYS" /> <Button text="Вихід" prefWidth="Infinity" style="-fx-background-color: #f44336; -fx-text-fill: white;">
-      <VBox.margin><Insets bottom="10"/></VBox.margin>
-    </Button>
+      <Button fx:id="computersButton" onAction="#handleShowComputers" text="Комп'ютери" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="clientsButton" onAction="#handleShowClients" text="Клієнти" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="tariffsButton" onAction="#handleShowTariffs" text="Тарифи" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="servicesButton" onAction="#handleShowServices" text="Послуги" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="historySessionButton" onAction="#handleShowHistorySession" text="Історія Сесій" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="historyPaymentButton" onAction="#handleShowHistoryPayment" text="Історія Транзакцій" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="statisticsButton" onAction="#handleShowStatistics" text="Статистика" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+      <Button fx:id="settingsButton" onAction="#handleShowSettings" text="Налаштування" prefWidth="Infinity" alignment="BASELINE_LEFT" styleClass="nav-button"/>
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <Button text="Вихід із системи" onAction="#handleLogout" prefWidth="Infinity" alignment="CENTER" styleClass="logout-button"/>
     </VBox>
   </left>
 
   <center>
-    <VBox spacing="20.0">
-      <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
-      </padding>
+    <StackPane fx:id="mainStackPane">
+      <VBox spacing="20.0">
+        <padding>
+          <Insets top="20" left="20" right="20" bottom="20"/>
+        </padding>
 
-      <HBox spacing="15.0" alignment="CENTER_LEFT">
-        <TextField fx:id="searchField"  promptText="Пошук комп'ютера..." prefWidth="300.0"
-          style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
-        <ComboBox fx:id="sortByStatus" promptText="Статус" style="-fx-background-color: #2a2a32;"/>
-        <Region HBox.hgrow="ALWAYS" />
-        <Button onAction="#handleShowAddComputer" text="+ Додати ПК" style="-fx-background-color: #4cc9f0; -fx-text-fill: #1e1e24; -fx-font-weight: bold;"/>
-      </HBox>
+        <HBox spacing="15.0" alignment="CENTER_LEFT">
+          <TextField fx:id="searchField"  promptText="Пошук комп'ютера..." prefWidth="300.0"
+            style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
+          <ComboBox fx:id="sortByStatus" promptText="Статус" style="-fx-background-color: #2a2a32; -fx-text-fill: white;"/>
+          <Region HBox.hgrow="ALWAYS" />
+          <Button fx:id="addButton" onAction="#handleMainAction" text="+ Додати ПК" style="-fx-background-color: #4cc9f0; -fx-text-fill: #1e1e24; -fx-font-weight: bold;"/>
+        </HBox>
 
-      <ScrollPane fitToWidth="true" style="-fx-background: #1e1e24; -fx-background-color: transparent; -fx-border-color: transparent;">
-        <FlowPane fx:id="computerContainer" hgap="20.0" vgap="20.0">
-        </FlowPane>
-      </ScrollPane>
-    </VBox>
+        <ScrollPane fitToWidth="true" style="-fx-background: #1e1e24; -fx-background-color: transparent; -fx-border-color: transparent;">
+          <FlowPane fx:id="mainContainer" hgap="20.0" vgap="20.0">
+          </FlowPane>
+        </ScrollPane>
+      </VBox>
+
+      <StackPane fx:id="rightPanelContainer" maxWidth="350.0" prefWidth="350.0"
+        StackPane.alignment="CENTER_RIGHT"
+        style="-fx-background-color: #2a2a32; -fx-border-color: #444; -fx-border-width: 0 0 0 1;
+                      -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 15, 0, -5, 0);"
+        visible="false">
+      </StackPane>
+    </StackPane>
   </center>
 </BorderPane>

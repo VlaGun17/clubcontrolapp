@@ -1,37 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.paint.Color?>
 
-<VBox alignment="CENTER" prefWidth="180.0" prefHeight="220.0"
-  style="-fx-background-color: #2a2a32; -fx-background-radius: 15; -fx-border-color: #4cc9f0; -fx-border-radius: 15; -fx-border-width: 2;"
+<VBox alignment="CENTER" prefWidth="190.0" prefHeight="240.0" spacing="8.0"
+  style="-fx-background-color: #1e1e24; -fx-background-radius: 20; -fx-border-color: #4cc9f0; -fx-border-radius: 20; -fx-border-width: 1.5; -fx-cursor: hand;"
   xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
 
-  <padding><Insets top="15" bottom="15" left="10" right="10"/></padding>
+  <effect>
+    <DropShadow radius="15.0" spread="0.1">
+      <color>
+        <Color red="0.298" green="0.788" blue="0.941" opacity="0.15" />
+      </color>
+    </DropShadow>
+  </effect>
 
-  <HBox alignment="TOP_RIGHT" prefWidth="Infinity">
+  <padding>
+    <Insets top="12" bottom="18" left="15" right="15"/>
+  </padding>
+
+  <HBox alignment="CENTER_RIGHT" prefWidth="Infinity">
     <Button fx:id="deleteBtn" id="deleteBtn" text="✕"
-      style="-fx-background-color: transparent; -fx-text-fill: #f44336; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 0 5 0 0;">
-      <font><Font size="16.0" /></font>
+      style="-fx-background-color: transparent; -fx-text-fill: #555; -fx-font-weight: bold; -fx-cursor: hand;">
+      <font>
+        <Font size="14.0" />
+      </font>
     </Button>
   </HBox>
 
-  <Label fx:id="nameLabel" text="PC-01" textFill="WHITE">
-    <font><Font name="System Bold" size="20.0" /></font>
-  </Label>
+  <VBox alignment="CENTER" spacing="2.0">
+    <Label fx:id="nameLabel" text="PC-01" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="22.0" />
+      </font>
+    </Label>
+    <Label fx:id="typeLabel" text="COMMON" textFill="#4cc9f0" style="-fx-font-size: 10px; -fx-letter-spacing: 1px; -fx-font-weight: bold;" />
+  </VBox>
 
-  <Label text="VIP ZONE" textFill="#4cc9f0" style="-fx-font-size: 10;">
-    <VBox.margin><Insets bottom="10"/></VBox.margin>
-  </Label>
+  <StackPane prefHeight="70.0">
+    <Region prefHeight="55.0" prefWidth="55.0" maxWidth="55.0"
+      style="-fx-background-color: #4caf50; -fx-shape: 'M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z';" />
+  </StackPane>
 
-  <Region prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #4caf50; -fx-shape: 'M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z';" />
+  <VBox alignment="CENTER" spacing="5.0">
+    <Label fx:id="statusLabel" id="statusLabel" text="ВІЛЬНИЙ" textFill="#4caf50">
+      <font>
+        <Font name="System Bold" size="13.0" />
+      </font>
+    </Label>
+  </VBox>
 
-  <Label fx:id="statusLabel" id="statusLabel" text="ВІЛЬНИЙ" textFill="#4caf50">
-    <font><Font name="System Bold" size="14.0" /></font>
-    <VBox.margin><Insets top="10" bottom="15"/></VBox.margin>
-  </Label>
+  <Button fx:id="actionBtn" id="actionBtn" text="ЗАНЯТИ" prefWidth="Infinity" prefHeight="35.0"
+    style="-fx-background-color: linear-gradient(to right, #7209b7, #4cc9f0); -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 13px; -fx-cursor: hand;">
+    <VBox.margin>
+      <Insets top="5"/>
+    </VBox.margin>
+    <effect>
+      <DropShadow blurType="ONE_PASS_BOX" radius="10.0" color="#7209b766" />
+    </effect>
+  </Button>
 
-  <Button fx:id="actionBtn" id="actionBtn" text="ЗАНЯТИ" prefWidth="Infinity" style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-background-radius: 20;"/>
 </VBox>

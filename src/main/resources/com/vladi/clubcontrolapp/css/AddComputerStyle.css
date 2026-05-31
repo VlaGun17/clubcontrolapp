@@ -1,0 +1,37 @@
+.button:hover {
+    -fx-background-color: #5a078f;
+}
+
+.text-field:focused {
+    -fx-border-color: #4cc9f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #2a2a32;
+    -fx-border-color: #444444;
+    -fx-border-width: 1;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #2a2a32;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #4a4a52;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #7209b7;
+    -fx-text-fill: white;
+}
+
+.combo-box .cell {
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}

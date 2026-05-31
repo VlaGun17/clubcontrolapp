@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -213,7 +214,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         rs.getObject("client_id", UUID.class),
         rs.getObject("session_id", UUID.class),
         rs.getBigDecimal("amount"),
-        rs.getObject("payment_date", LocalDate.class),
+        rs.getObject("payment_date", LocalDateTime.class),
         rs.getString("method")
     );
   }

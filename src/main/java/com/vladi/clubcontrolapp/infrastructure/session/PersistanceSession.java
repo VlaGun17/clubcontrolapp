@@ -108,6 +108,10 @@ public class PersistanceSession {
     unitOfWork.registerDeleted(client);
   }
 
+  public List<Client> getAllClients() { return clientRepository.findAll(); }
+
+  public Optional<Client> getClientByLogin(String login) { return clientRepository.findByLogin(login); }
+
   // --- COMPUTERS ---
   public Optional<Computer> getComputer(UUID id) {
     return computerRepository.findById(id);
@@ -194,6 +198,8 @@ public class PersistanceSession {
     return tariffRepository.findByName(name);
   }
 
+  public List<Tariff> getAllTariffs() { return tariffRepository.findAll(); }
+
   // --- SERVICES ---
   public Optional<Service> getService(UUID id) {
     return serviceRepository.findById(id);
@@ -218,6 +224,8 @@ public class PersistanceSession {
   public List<Service> getServicesInPriceRange(BigDecimal min, BigDecimal max) {
     return serviceRepository.findByPriceRange(min, max);
   }
+
+  public List<Service> getAllServices(){ return serviceRepository.findAll(); }
 
   // --- SESSIONS ---
   public Optional<Session> getSession(UUID id) {
@@ -256,6 +264,8 @@ public class PersistanceSession {
     return sessionServiceRepository.findBySessionId(sessionId);
   }
 
+  public List<Session> getAllSession(){ return sessionRepository.findAll(); }
+
   // --- PAYMENTS ---
   public Optional<Payment> getPaymentBySession(UUID sessionId) {
     return paymentRepository.findBySessionId(sessionId);
@@ -281,7 +291,11 @@ public class PersistanceSession {
     return paymentRepository.getTotalRevenue(LocalDate.now());
   }
 
+  public List<Payment> getAllPayments() { return paymentRepository.findAll(); }
+
   public void commit(){
     unitOfWork.commit();
   }
+
+  public void rollback() { unitOfWork.rollback(); }
 }

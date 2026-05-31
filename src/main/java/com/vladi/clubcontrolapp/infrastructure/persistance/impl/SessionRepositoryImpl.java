@@ -182,7 +182,10 @@ public class SessionRepositoryImpl implements SessionRepository {
   public void update(Session entity) {
     String sql = """
         UPDATE sessions
-        SET start_time = ?,
+        SET client_id = ?,
+        computer_id = ?,
+        tariff_id = ?,
+        start_time = ?,
         end_time = ?,
         total_cost = ?,
         is_active = ?
@@ -190,11 +193,14 @@ public class SessionRepositoryImpl implements SessionRepository {
         """;
     try(Connection conn = connectionManager.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)){
-      stmt.setObject(1, entity.getStartTime());
-      stmt.setObject(2, entity.getEndTime());
-      stmt.setBigDecimal(3, entity.getTotalCost());
-      stmt.setBoolean(4, entity.isActive());
-      stmt.setObject(5, entity.getId());
+      stmt.setObject(1, entity.getClientId());
+      stmt.setObject(2, entity.getComputerId());
+      stmt.setObject(3, entity.getTariffId());
+      stmt.setObject(4, entity.getStartTime());
+      stmt.setObject(5, entity.getEndTime());
+      stmt.setBigDecimal(6, entity.getTotalCost());
+      stmt.setBoolean(7, entity.isActive());
+      stmt.setObject(8, entity.getId());
 
       int rowsAffected = stmt.executeUpdate();
       if (rowsAffected == 0) {

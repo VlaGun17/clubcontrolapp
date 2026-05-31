@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #2a2a32; -fx-padding: 25;"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.SettingsController">
+
+  <VBox spacing="5.0">
+    <Label text="НАЛАШТУВАННЯ СИСТЕМИ" textFill="#4cc9f0">
+      <font><Font name="System Bold" size="22.0" /></font>
+    </Label>
+    <Label text="Керування інтеграціями та фінансовими ключами клубу" textFill="#888" style="-fx-font-size: 13px;" />
+  </VBox>
+
+  <StackPane VBox.vgrow="ALWAYS">
+    <VBox fx:id="lockPane" alignment="CENTER" spacing="15.0" style="-fx-background-color: #1e1e24; -fx-background-radius: 10; -fx-border-color: #444;">
+      <padding><Insets/></padding>
+      <Label text="Доступ обмежено" textFill="#e11d48">
+        <font><Font name="System Bold" size="18.0" /></font>
+      </Label>
+      <Label text="Введіть пароль власника клубу для редагування ключів LiqPay:" textFill="#ccc" />
+
+      <PasswordField fx:id="passwordField" maxWidth="300.0" promptText="Пароль доступу"
+        style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-border-color: #4cc9f0; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+
+      <Button onAction="#handleUnlock" text="Підтвердити"
+        style="-fx-background-color: #4cc9f0; -fx-text-fill: #1e1e24; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20;"/>
+      <Label fx:id="errorLabel" textFill="#e11d48" />
+    </VBox>
+
+    <VBox fx:id="settingsPane" visible="false" spacing="20.0" style="-fx-background-color: #1e1e24; -fx-background-radius: 10; -fx-padding: 25; -fx-border-color: #444;">
+      <Label text="Інтеграція з платіжним шлюзом LiqPay" textFill="WHITE">
+        <font><Font name="System Bold" size="16.0" /></font>
+      </Label>
+
+      <GridPane hgap="15.0" vgap="15.0">
+        <columnConstraints>
+          <ColumnConstraints prefWidth="180.0" />
+          <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints prefHeight="40.0" />
+          <RowConstraints prefHeight="40.0" />
+        </rowConstraints>
+
+        <Label text="Публічний ключ (Public Key):" textFill="#ccc" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="publicKeyField" promptText="i00000000000"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-border-color: #555; -fx-border-radius: 5; -fx-background-radius: 5;"
+          GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Приватний ключ (Private Key):" textFill="#ccc" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <PasswordField fx:id="privateKeyField" promptText="Приватний ключ захищено"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-border-color: #555; -fx-border-radius: 5; -fx-background-radius: 5;"
+          GridPane.rowIndex="1" GridPane.columnIndex="1" />
+      </GridPane>
+
+      <HBox spacing="15.0" alignment="CENTER_RIGHT">
+        <Button onAction="#handleLockSettings" text="Заблокувати вкладку"
+          style="-fx-background-color: transparent; -fx-text-fill: #888; -fx-border-color: #555; -fx-border-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
+        <Button onAction="#handleSaveSettings" text="Зберегти налаштування"
+          style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20;"/>
+      </HBox>
+    </VBox>
+  </StackPane>
+</VBox>

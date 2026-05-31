@@ -1,27 +1,20 @@
 package com.vladi.clubcontrolapp.presentation.controller;
 
 import com.vladi.clubcontrolapp.Launcher;
-import com.vladi.clubcontrolapp.domain.entities.Computer;
-import com.vladi.clubcontrolapp.domain.enums.ComputerStatus;
-import com.vladi.clubcontrolapp.domain.enums.ComputerType;
+import com.vladi.clubcontrolapp.domain.entities.Service;
 import com.vladi.clubcontrolapp.infrastructure.session.PersistanceSession;
-import com.vladi.clubcontrolapp.presentation.util.NavigationManager;
 import com.vladi.clubcontrolapp.presentation.util.OnDataChangeListener;
+import java.math.BigDecimal;
 import java.util.UUID;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class AddComputerController {
-  @FXML private TextField numberField;
-  @FXML private ComboBox<ComputerType> typeComboBox;
+public class AddServiceController {
+  @FXML private TextField nameField;
+  @FXML private TextField priceField;
   @FXML private Label errorLabel;
   private Node overlayNode;
   private OnDataChangeListener listener;
@@ -29,34 +22,32 @@ public class AddComputerController {
   private final PersistanceSession session = Launcher.getSessionContext();
 
   @FXML
-  public void initialize() {
-    typeComboBox.setItems(FXCollections.observableArrayList(ComputerType.values()));
-    typeComboBox.setValue(ComputerType.Common);
-  }
+  private void handleSave(){
+    try{
+      String name =  nameField.getText().trim();
+      double price = Double.parseDouble(priceField.getText());
 
-  @FXML
-  private void handleSave() {
-    try {
-      int number = Integer.parseInt(numberField.getText());
-      ComputerType type = typeComboBox.getValue();
+      if (name.isEmpty()) {
+        errorLabel.setText("Введіть назву послуги!");
+        return;
+      }
 
-      Computer newPc = new Computer(
+      Service newService = new Service(
           UUID.randomUUID(),
-          number,
-          type.name(),
-          ComputerStatus.Available.name()
+          name,
+          BigDecimal.valueOf(price)
       );
 
-      session.addComputer(newPc);
+
+      session.addService(newService);
       session.commit();
 
       if(listener != null){
         listener.onDataChanged();
       }
-
       handleCancel();
     } catch (NumberFormatException e) {
-      errorLabel.setText("Номер має бути числом!");
+      errorLabel.setText("Ціна повинна бути числом (наприклад: 45.5)");
     } catch (Exception e) {
       errorLabel.setText("Помилка при збереженні!");
       e.printStackTrace();
@@ -64,7 +55,7 @@ public class AddComputerController {
   }
 
   @FXML
-  private void handleCancel() {
+  private void handleCancel(){
     if (overlayNode != null && overlayNode.getParent() instanceof Pane) {
       ((Pane) overlayNode.getParent()).getChildren().remove(overlayNode);
     }

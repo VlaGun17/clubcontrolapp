@@ -33,6 +33,17 @@ public class CachedClientRepository
   }
 
   @Override
+  public Optional<Client> findByLogin(String login) {
+    Optional<Client> fromDb = clientDelegate.findByLogin(login);
+    return fromDb.map(client -> {
+      Optional<Client> cached = identityMap.get(client.getId());
+      if(cached.isPresent()) return cached.get();
+      identityMap.put(client.getId(), client);
+      return client;
+    });
+  }
+
+  @Override
   public List<Client> findByNameContaining(String name) {
     List<Client> clients = clientDelegate.findByNameContaining(name);
     clients.forEach(client -> identityMap.put(client.getId(), client));

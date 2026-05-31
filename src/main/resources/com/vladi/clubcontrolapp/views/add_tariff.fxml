@@ -5,33 +5,38 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" prefWidth="400.0" prefHeight="450.0"
+<VBox alignment="CENTER" spacing="20.0" prefWidth="400.0" prefHeight="500.0"
   style="-fx-background-color: #1e1e24;"
   xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="com.vladi.clubcontrolapp.presentation.controller.AddComputerController"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.AddTariffController"
   stylesheets="@../css/AddComputerStyle.css">
 
   <padding>
     <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
   </padding>
 
-  <Label text="ДОДАТИ КОМП'ЮТЕР" textFill="#4cc9f0">
+  <Label text="ДОДАТИ ТАРИФ" textFill="#4cc9f0">
     <font>
       <Font name="System Bold" size="22.0" />
     </font>
   </Label>
 
   <VBox spacing="10.0">
-    <Label text="Номер комп'ютера" textFill="WHITE" />
-    <TextField fx:id="numberField" promptText="Наприклад: 15"
+    <Label text="Назва тарифу" textFill="WHITE" />
+    <TextField fx:id="nameField" promptText="Наприклад: VIP Ніч"
       style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
   </VBox>
 
   <VBox spacing="10.0">
-    <Label text="Тип комп'ютера" textFill="WHITE" />
-    <ComboBox fx:id="typeComboBox" prefWidth="Infinity"
-      style="-fx-background-color: #2a2a32; -fx-mark-color: #999999; -fx-text-fill: white;" />
+    <Label text="Ціна за годину (₴)" textFill="WHITE" />
+    <TextField fx:id="priceField" promptText="Наприклад: 50.0"
+      style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-background-radius: 5;" />
   </VBox>
+
+  <HBox alignment="CENTER_LEFT" spacing="10.0">
+    <CheckBox fx:id="nightCheckBox" text="Нічний тариф" textFill="WHITE"
+      style="-fx-cursor: hand; -fx-mark-color: #4cc9f0;" />
+  </HBox>
 
   <Label fx:id="errorLabel" textFill="#f44336" wrapText="true" />
 

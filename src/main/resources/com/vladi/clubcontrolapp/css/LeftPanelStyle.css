@@ -1,0 +1,71 @@
+.sidebar {
+    -fx-background-color: #1e1e24;
+    -fx-border-color: transparent #2a2a32 transparent transparent;
+    -fx-border-width: 0 2 0 0;
+}
+
+.logo-container {
+    -fx-padding: 0 0 10 0;
+    -fx-border-color: transparent transparent #2a2a32 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.logo-text-white {
+    -fx-font-family: "Segoe UI", "Arial Black", sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+    -fx-text-fill: #ffffff;
+    -fx-letter-spacing: 2px;
+}
+
+.logo-text-accent {
+    -fx-font-family: "Segoe UI", "Arial Black", sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4cc9f0;
+    -fx-letter-spacing: 4px;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #9a9abb;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-padding: 12px 16px 12px 16px;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(76, 201, 240, 0.08);
+    -fx-text-fill: #4cc9f0;
+}
+
+.nav-button:focused, .nav-button:active {
+    -fx-background-color: rgba(76, 201, 240, 0.15);
+    -fx-text-fill: #4cc9f0;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent transparent #4cc9f0;
+    -fx-border-width: 0 0 0 4;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #ff4757;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #ff4757;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #ff4757;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 71, 87, 0.4), 10, 0, 0, 0);
+}

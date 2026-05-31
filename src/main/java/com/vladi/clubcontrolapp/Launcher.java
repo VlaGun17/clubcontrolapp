@@ -1,8 +1,19 @@
 package com.vladi.clubcontrolapp;
 
+import com.vladi.clubcontrolapp.domain.entities.Admin;
+import com.vladi.clubcontrolapp.domain.entities.Client;
+import com.vladi.clubcontrolapp.domain.entities.Computer;
+import com.vladi.clubcontrolapp.domain.entities.Payment;
+import com.vladi.clubcontrolapp.domain.entities.Service;
+import com.vladi.clubcontrolapp.domain.entities.Session;
+import com.vladi.clubcontrolapp.domain.entities.Tariff;
+import com.vladi.clubcontrolapp.domain.enums.ComputerStatus;
+import com.vladi.clubcontrolapp.domain.enums.ComputerType;
+import com.vladi.clubcontrolapp.domain.enums.MethodPayment;
 import com.vladi.clubcontrolapp.infrastructure.persistance.util.ConnectionManager;
 import com.vladi.clubcontrolapp.infrastructure.session.PersistanceSession;
-import javafx.application.Application;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.flywaydb.core.Flyway;
 import org.h2.tools.Server;
 
@@ -21,7 +32,7 @@ public class Launcher {
 
       context = new PersistanceSession(connectionManager);
 
-      Application.launch(HelloApplication.class, args);
+      javafx.application.Application.launch(Application.class, args);
 
     } catch (Exception e) {
       e.printStackTrace();

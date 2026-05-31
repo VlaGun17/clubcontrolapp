@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:controller="com.vladi.clubcontrolapp.presentation.controller.LoginController" alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="500.0"
-  style="-fx-background-color: #1e1e24;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="com.vladi.clubcontrolapp.presentation.controller.LoginController" alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="550.0"
+  style="-fx-background-color: #1e1e24;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/style.css">
 
   <padding>
     <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToWidth="true" pannable="true"
+  style="-fx-background-color: #2a2a32; -fx-background: #2a2a32;"
+  stylesheets="/com/vladi/clubcontrolapp/css/chart_style.css"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.StatisticsController">
+
+  <VBox spacing="20.0" style="-fx-background-color: #2a2a32; -fx-padding: 25;">
+
+    <HBox alignment="CENTER_LEFT" spacing="15.0">
+      <VBox>
+        <Label text="АНАЛІТИКА ТА СТАТИСТИКА" textFill="#4cc9f0">
+          <font>
+            <Font name="System Bold" size="22.0"/>
+          </font>
+        </Label>
+        <Label text="Фінансові звіти клубу та аналіз доходів" textFill="#888"
+          style="-fx-font-size: 13px;"/>
+      </VBox>
+      <Region HBox.hgrow="ALWAYS"/>
+
+      <HBox alignment="CENTER_LEFT" spacing="10.0"
+        style="-fx-background-color: #1e1e24; -fx-padding: 10; -fx-background-radius: 5; -fx-border-color: #444; -fx-border-radius: 5;">
+        <Label text="Період:" textFill="#ccc" style="-fx-font-size: 13.0;"/>
+        <ComboBox fx:id="periodComboBox" prefWidth="150.0"
+          style="-fx-background-color: #2a2a32; -fx-text-fill: white; -fx-cursor: hand;"/>
+
+        <Label text="Конкретний день:" textFill="#ccc" style="-fx-font-size: 13.0;">
+          <padding>
+            <Insets left="10.0"/>
+          </padding>
+        </Label>
+        <DatePicker fx:id="customDatePicker" prefWidth="140.0"
+          style="-fx-control-inner-background: #2a2a32; -fx-text-fill: white; -fx-cursor: hand;"/>
+      </HBox>
+    </HBox>
+
+    <Separator opacity="0.1"/>
+
+    <HBox spacing="20.0">
+      <VBox prefWidth="230.0"
+        style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;">
+        <Label text="Загальний дохід за період" textFill="#ccc" style="-fx-font-size: 13.0;"/>
+        <Label fx:id="totalPeriodIncomeLabel" text="0.00 ₴" textFill="#4caf50">
+          <font>
+            <Font name="System Bold" size="26.0"/>
+          </font>
+        </Label>
+      </VBox>
+      <VBox prefWidth="230.0"
+        style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;">
+        <Label text="Кількість транзакцій" textFill="#ccc" style="-fx-font-size: 13.0;"/>
+        <Label fx:id="transactionCountLabel" text="0" textFill="#4cc9f0">
+          <font>
+            <Font name="System Bold" size="26.0"/>
+          </font>
+        </Label>
+      </VBox>
+      <VBox prefWidth="230.0"
+        style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;">
+        <Label text="Середній чек сесії" textFill="#ccc" style="-fx-font-size: 13.0;"/>
+        <Label fx:id="averagePaymentLabel" text="0.00 ₴" textFill="WHITE">
+          <font>
+            <Font name="System Bold" size="26.0"/>
+          </font>
+        </Label>
+      </VBox>
+    </HBox>
+
+    <VBox
+      style="-fx-background-color: #1e1e24; -fx-background-radius: 5; -fx-border-color: #444; -fx-padding: 15;"
+      prefHeight="350.0">
+      <Label text="Динаміка прибутку" textFill="#ccc"
+        style="-fx-font-size: 15px; -fx-font-weight: bold;">
+        <VBox.margin>
+          <Insets bottom="10.0"/>
+        </VBox.margin>
+      </Label>
+      <BarChart fx:id="revenueChart" legendVisible="false" VBox.vgrow="ALWAYS">
+        <xAxis>
+          <CategoryAxis fx:id="xAxis" tickLabelFill="#ccc"/>
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" tickLabelFill="#ccc"/>
+        </yAxis>
+      </BarChart>
+    </VBox>
+
+    <VBox spacing="10.0">
+      <Label text="РЕЙТИНГ КЛІЄНТІВ" textFill="#4cc9f0">
+        <font>
+          <Font name="System Bold" size="18.0"/>
+        </font>
+      </Label>
+
+      <GridPane hgap="15.0" vgap="15.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+
+          <VBox spacing="8.0" style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;" GridPane.columnIndex="0">
+            <Label text="Топ за витратами" textFill="#4cc9f0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TableView fx:id="topSpentTableView" prefHeight="250.0"
+              style="-fx-background-color: transparent; -fx-control-inner-background: #1e1e24; -fx-control-inner-background-alt: #1e1e24; -fx-border-color: #3f3f46; -fx-border-radius: 8; -fx-background-radius: 8; -fx-table-cell-border-color: #27272a; -fx-body-color: #27272a; -fx-text-background-color: #ffffff;">
+              <columns>
+                <TableColumn fx:id="spentClientColumn" text="Клієнт" prefWidth="120.0"/>
+                <TableColumn fx:id="spentValueColumn" text="Сума" prefWidth="100.0"/>
+              </columns>
+              <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+              </columnResizePolicy>
+            </TableView>
+          </VBox>
+
+          <VBox spacing="8.0" style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;" GridPane.columnIndex="1">
+            <Label text="Топ за часом гри" textFill="#4cc9f0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TableView fx:id="topHoursTableView" prefHeight="250.0"
+              style="-fx-background-color: transparent; -fx-control-inner-background: #1e1e24; -fx-control-inner-background-alt: #1e1e24; -fx-border-color: #3f3f46; -fx-border-radius: 8; -fx-background-radius: 8; -fx-table-cell-border-color: #27272a; -fx-body-color: #27272a; -fx-text-background-color: #ffffff;">
+              <columns>
+                <TableColumn fx:id="hoursClientColumn" text="Клієнт" prefWidth="120.0"/>
+                <TableColumn fx:id="hoursValueColumn" text="Години" prefWidth="100.0"/>
+              </columns>
+              <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+              </columnResizePolicy>
+            </TableView>
+          </VBox>
+
+          <VBox spacing="8.0" style="-fx-background-color: #1e1e24; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #444;" GridPane.columnIndex="2">
+            <Label text="Топ за візитами" textFill="#e11d48" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TableView fx:id="topVisitsTableView" prefHeight="250.0"
+              style="-fx-background-color: transparent; -fx-control-inner-background: #1e1e24; -fx-control-inner-background-alt: #1e1e24; -fx-border-color: #3f3f46; -fx-border-radius: 8; -fx-background-radius: 8; -fx-table-cell-border-color: #27272a; -fx-body-color: #27272a; -fx-text-background-color: #ffffff;">
+              <columns>
+                <TableColumn fx:id="visitsClientColumn" text="Клієнт" prefWidth="120.0"/>
+                <TableColumn fx:id="visitsValueColumn" text="Візити" prefWidth="100.0"/>
+              </columns>
+              <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+              </columnResizePolicy>
+            </TableView>
+          </VBox>
+
+        </children>
+      </GridPane>
+    </VBox>
+  </VBox>
+</ScrollPane>

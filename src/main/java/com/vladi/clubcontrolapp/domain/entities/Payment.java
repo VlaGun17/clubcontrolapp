@@ -2,6 +2,7 @@ package com.vladi.clubcontrolapp.domain.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public class Payment {
   private UUID clientId;
   private UUID sessionId;
   private BigDecimal amount;
-  private LocalDate paymentDate;
+  private LocalDateTime paymentDate;
   private String paymentMethod;
 
   public Payment (UUID clientId, UUID sessionId, BigDecimal amount){
@@ -19,11 +20,11 @@ public class Payment {
     this.clientId = clientId;
     this.sessionId = sessionId;
     this.amount = amount;
-    this.paymentDate = LocalDate.now();
+    this.paymentDate = LocalDateTime.now();
   }
 
   public Payment(UUID id, UUID clientId, UUID sessionId, BigDecimal amount,
-      LocalDate paymentDate, String paymentMethod) {
+      LocalDateTime paymentDate, String paymentMethod) {
     this.id = id;
     this.clientId = clientId;
     this.sessionId = sessionId;
@@ -60,11 +61,11 @@ public class Payment {
     this.amount = amount;
   }
 
-  public LocalDate getPaymentDate() {
+  public LocalDateTime getPaymentDate() {
     return paymentDate;
   }
 
-  public void setPaymentDate(LocalDate paymentDate) {
+  public void setPaymentDate(LocalDateTime paymentDate) {
     this.paymentDate = paymentDate;
   }
 

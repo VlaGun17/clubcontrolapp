@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="20.0" prefWidth="350.0" style="-fx-background-color: #2a2a32; -fx-padding: 25;"
+  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.vladi.clubcontrolapp.presentation.controller.BuyServiceController">
+
+  <HBox alignment="CENTER_LEFT">
+    <Label text="ПРОДАЖ ПОСЛУГИ" textFill="#4cc9f0">
+      <font><Font name="System Bold" size="20.0" /></font>
+    </Label>
+    <Region HBox.hgrow="ALWAYS" />
+    <Button text="✕" onAction="#handleClose"
+      style="-fx-background-color: transparent; -fx-text-fill: #ccc; -fx-font-size: 18px; -fx-cursor: hand;" />
+  </HBox>
+
+  <Separator opacity="0.1" />
+
+  <VBox spacing="5.0">
+    <Label text="Обрана послуга:" textFill="#ccc" />
+    <Label fx:id="serviceNameLabel" text="Назва послуги" textFill="WHITE">
+      <font><Font name="System Bold" size="22.0" /></font>
+    </Label>
+    <Label fx:id="servicePriceLabel" text="0.00 ₴" textFill="#4caf50">
+      <font><Font name="System Bold" size="16.0" /></font>
+    </Label>
+  </VBox>
+
+  <Separator opacity="0.1" />
+
+  <VBox spacing="15.0">
+    <VBox spacing="5.0">
+      <Label text="Оберіть комп'ютер (тільки зайняті):" textFill="WHITE" />
+      <ComboBox fx:id="activePcComboBox" promptText="Наприклад: PC-5" prefWidth="Infinity"
+        style="-fx-background-color: #1e1e24; -fx-text-fill: white; -fx-border-color: #444; -fx-border-radius: 5;" />
+    </VBox>
+
+    <VBox spacing="5.0">
+      <Label text="Кількість:" textFill="WHITE" />
+      <TextField fx:id="quantityField" text="1"
+        style="-fx-background-color: #1e1e24; -fx-text-fill: white; -fx-border-color: #444; -fx-border-radius: 5;" />
+    </VBox>
+
+    <Label fx:id="errorLabel" textFill="#f44336" wrapText="true" />
+  </VBox>
+
+  <Region prefHeight="20.0" />
+
+  <Button text="ДОДАТИ В ЧЕК" onAction="#handleConfirmPurchase"
+    maxWidth="Infinity" prefHeight="45.0"
+    style="-fx-background-color: #7209b7; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+</VBox>
